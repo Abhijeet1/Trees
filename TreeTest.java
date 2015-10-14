@@ -15,6 +15,32 @@ public class TreeTest {
 		testpreOrderIterative();
 		testpostOrderIterative();
 		levelOrderIterative();
+		testSize();
+		testHeight();
+		testInOrderSuccessor();
+	}
+
+	private static void testInOrderSuccessor() {
+		// TODO Auto-generated method stub
+		newLine();
+		Tree tree = createTree();
+		tree.inOrderSuccessor(new TreeNode(8));
+	}
+
+	private static void testHeight() {
+		// TODO Auto-generated method stub
+		newLine();
+		Tree tree = createTree();
+		int i = tree.height(tree.root);
+		System.out.println("Height-->" + i);
+	}
+
+	private static void testSize() {
+		// TODO Auto-generated method stub
+		newLine();
+		Tree tree = createTree();
+		int i = tree.size(tree.root);
+		System.out.println("Size-->" + i);
 	}
 
 	private static void levelOrderIterative() {
@@ -104,6 +130,85 @@ class Tree {
 
 	public Tree(TreeNode root) {
 		this.root = root;
+	}
+
+	public void inOrderSuccessor(TreeNode node) {
+		// TODO Auto-generated method stub
+		TreeNode temp = node;
+		Stack<TreeNode> st = new Stack<TreeNode>();
+		boolean done = false;
+		
+		while(!done){
+			
+			while(node != null)
+			{
+		
+				node = node.left;
+			}
+			
+			if(st.empty()){
+				done = true;
+				continue;
+			}else{
+				node = st.pop();
+				if(node.value == temp.value){
+					System.out.println("XXXXXXXXXX");
+					TreeNode parent = st.pop();
+					if(parent.right == null)
+					{
+						System.out.println("Successor is-->" + parent.value);
+					}
+					else
+					{
+						TreeNode child = parent.right;
+						while(child.left != null)
+							child = child.left;
+						System.out.println("Successor is-->" + child.value);
+					}
+					done = true;
+					continue;
+				}
+				//System.out.print(" " + node.value);
+			}
+			
+			
+			if(node.right != null)
+				node = node.right;
+			else
+				node = null;
+			
+			
+		}
+		
+		System.out.println("InOrder Successor for a Node-->" + temp.value );
+		
+	}
+
+	public int height(TreeNode node) {
+		// TODO Auto-generated method stub
+		if(node == null)
+			return 0;
+		
+		int hl = height(node.left);
+		int hr = height(node.right);
+		
+		return 1 + max(hl,hr);
+	}
+
+	private int max(int a, int b) {
+		// TODO Auto-generated method stub
+		if(a>b)
+			return a;
+		else
+			return b;
+	}
+
+	public int size(TreeNode node) {
+		// TODO Auto-generated method stub
+		if(node == null)
+			return 0;
+		
+		return 1 + size(node.left) + size(node.right);
 	}
 
 	public void iterativeInOrder() {
@@ -231,4 +336,3 @@ class Tree {
 		}
 	}
 }
-
